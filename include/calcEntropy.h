@@ -8,7 +8,7 @@
 
 typedef double *histogram;
 
-double computeEntropy(bitMap bm, BITMAPINFOHEADER *bmapInfoHeader, histogram histo);
+double computeEntropy(bitMap bm, BITMAPINFOHEADER *bmapInfoHeader, histogram histo, int L, int D);
 histogram computeHist(bitMap bm, BITMAPINFOHEADER *bmapInfoHeader);
 	
 #endif

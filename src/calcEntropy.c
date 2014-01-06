@@ -6,7 +6,7 @@ histogram computeHist(bitMap bm, BITMAPINFOHEADER *bmInfoHeader){
 	int i;
 	int height = bmInfoHeader->biHeight;
 	int width = bmInfoHeader->biWidth;
-	double nbTotal = (double) height*width;
+	int nbTotal = height*width;
 
 	// initialisation de l'histogramme
 	for (i = 0; i < nbTotal; i++) {
@@ -17,25 +17,32 @@ histogram computeHist(bitMap bm, BITMAPINFOHEADER *bmInfoHeader){
 	return histo;
 }
 
-double computeEntropy(bitMap bm, BITMAPINFOHEADER *bmInfoHeader, histogram histo) {
-	int sizeHist = (int) pow(2, bmInfoHeader->biBitCount);
+double computeEntropy(bitMap bm, BITMAPINFOHEADER *bmInfoHeader, histogram histo, int L, int D) {
 	double p,result = 0;
 	int i;
+	int color;
+	int nbElem = 0;
 	int height = bmInfoHeader->biHeight;
 	int width = bmInfoHeader->biWidth;
-	double nbTotal = (double) height*width;
+	int nbTotal = (int) height*width;
 
-	printf("%f\n",nbTotal);
+	for (i = L; i < L+D; i++) {
+		nbElem += histo[i];
+	}
+
+	printf("%d\n",nbTotal);
 
 	// calcul de l'entropie à proprement parler
-	for (i = 0; i < sizeHist; i++) {
-		if (histo[i]!=0) {
-			printf("%d:%d\t",i,(int) histo[i]);
-			p=histo[i]/nbTotal;
+	for (i = 0; i < nbTotal; i++) {
+		color = bm[i];
+		if (color>=L && color<L+D) {
+			//printf("%d:%d\t",i,(int) histo[i]);
+			p=(double) histo[color]/ (double) nbElem;
 			result -= p*log(p);
 		}
 	}
-	free(histo);
 
-	return result*1/log(2);
+	return result/(log(2)*(double)nbElem);
 }
+
+//double findMaxEntropy

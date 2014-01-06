@@ -3,9 +3,10 @@
 
 int main (int argc, char *argv[]) {
 	BITMAPINFOHEADER bmapIHeader;
-	bitMap bmap = LoadBitmapFile("/home/j4g0n/IA/80.bmp",&bmapIHeader);
+	bitMap bmap = LoadBitmapFile("80.bmp",&bmapIHeader);
 	histogram hist = computeHist(bmap, &bmapIHeader);
 
+/*
 	printf("taille header info:%x\n", bmapIHeader.biSize);
 	printf("largeur:%x\n", bmapIHeader.biWidth);
 	printf("hauteur:%x\n", bmapIHeader.biHeight);
@@ -15,8 +16,9 @@ int main (int argc, char *argv[]) {
 	printf("taille image en byte:%x\n", bmapIHeader.biSizeImage);
 	printf("nombre couleurs utilisées:%x\n", bmapIHeader.biClrUsed);
 	printf("nombre couleurs importantes:%x\n", bmapIHeader.biClrImportant);
+	*/
 	
-	double entropy = computeEntropy(bmap, &bmapIHeader, hist);
+	double entropy = computeEntropy(bmap, &bmapIHeader, hist, 100, 50);
 
 	printf("entropy:%f\n",entropy);
 	return 0;
