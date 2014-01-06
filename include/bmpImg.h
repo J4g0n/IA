@@ -32,6 +32,8 @@ typedef struct tagBITMAPINFOHEADER
 	DWORD biClrImportant;  //number of colors that are important
 }BITMAPINFOHEADER;
 
-unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader);
+typedef unsigned char *bitMap;
+
+bitMap LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader);
 
 #endif

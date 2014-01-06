@@ -1,10 +1,10 @@
 #include "bmpImg.h"
 
-unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader)
+bitMap LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader)
 {
 	FILE *filePtr; //our file pointer
 	BITMAPFILEHEADER bitmapFileHeader; //our bitmap file header
-	unsigned char *bitmapImage; //store image data
+	bitMap bitmapImage; //store image data
 	int imageIdx=0;  //image index counter
 	unsigned char tempRGB;  //our swap variable
 
@@ -19,7 +19,7 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
 	fread(&bitmapFileHeader.bfReserved1, 2,1,filePtr);
 	fread(&bitmapFileHeader.bfReserved2, 2,1,filePtr);
 	fread(&bitmapFileHeader.bfOffBits, 4,1,filePtr);
-	printf("%d %d %d %d %d\n", 
+	printf("Type fichier:%d\n Taille fichier:%d\n Reserve:%d\n Reserve2:%d\n Debut du bitmap:%d\n", 
 				bitmapFileHeader.bfType,
 				bitmapFileHeader.bfSize,
 				bitmapFileHeader.bfReserved1,
@@ -34,14 +34,13 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
 	}
 
 	//read the bitmap info header
-//	fseek(filePtr,14,SEEK_SET);
 	fread(bitmapInfoHeader, sizeof(BITMAPINFOHEADER),1,filePtr);
 
 	//move file point to the begging of bitmap data
 	fseek(filePtr, bitmapFileHeader.bfOffBits, SEEK_SET);
 
 	//allocate enough memory for the bitmap image data
-	bitmapImage = (unsigned char*)malloc(bitmapInfoHeader->biSizeImage);
+	bitmapImage = (bitMap)malloc(bitmapInfoHeader->biSizeImage);
 
 	//verify memory allocation
 	if (!bitmapImage)
@@ -73,3 +72,4 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
 	fclose(filePtr);
 	return bitmapImage;
 }
+
