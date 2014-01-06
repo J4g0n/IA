@@ -4,6 +4,7 @@
 int main (int argc, char *argv[]) {
 	BITMAPINFOHEADER bmapIHeader;
 	bitMap bmap = LoadBitmapFile("/home/j4g0n/IA/80.bmp",&bmapIHeader);
+	histogram hist = computeHist(bmap, &bmapIHeader);
 
 	printf("taille header info:%x\n", bmapIHeader.biSize);
 	printf("largeur:%x\n", bmapIHeader.biWidth);
@@ -15,7 +16,7 @@ int main (int argc, char *argv[]) {
 	printf("nombre couleurs utilisées:%x\n", bmapIHeader.biClrUsed);
 	printf("nombre couleurs importantes:%x\n", bmapIHeader.biClrImportant);
 	
-	double entropy = computeEntropy(bmap, &bmapIHeader);
+	double entropy = computeEntropy(bmap, &bmapIHeader, hist);
 
 	printf("entropy:%f\n",entropy);
 	return 0;

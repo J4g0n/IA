@@ -1,19 +1,29 @@
 #include "calcEntropy.h"
 
-double computeEntropy(bitMap bm, BITMAPINFOHEADER *bmInfoHeader) {
+histogram computeHist(bitMap bm, BITMAPINFOHEADER *bmInfoHeader){
 	int sizeHist = (int) pow(2, bmInfoHeader->biBitCount);
-	double p,result = 0;
-	int i,j;
+	double *histo = (double *) calloc(sizeHist,sizeof(double));
+	int i;
 	int height = bmInfoHeader->biHeight;
 	int width = bmInfoHeader->biWidth;
 	double nbTotal = (double) height*width;
-	double *histo = (double *) calloc(sizeHist,sizeof(double));
 
 	// initialisation de l'histogramme
-	for (i = 0; i < width*height; i++) {
+	for (i = 0; i < nbTotal; i++) {
 		//printf("%d\t",bm[i]);
 		histo[(unsigned int) bm[i]]+=1;
 	}
+
+	return histo;
+}
+
+double computeEntropy(bitMap bm, BITMAPINFOHEADER *bmInfoHeader, histogram histo) {
+	int sizeHist = (int) pow(2, bmInfoHeader->biBitCount);
+	double p,result = 0;
+	int i;
+	int height = bmInfoHeader->biHeight;
+	int width = bmInfoHeader->biWidth;
+	double nbTotal = (double) height*width;
 
 	printf("%f\n",nbTotal);
 

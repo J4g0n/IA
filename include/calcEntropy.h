@@ -6,6 +6,9 @@
 #include <bmpImg.h>
 #include <math.h>
 
-double computeEntropy(bitMap bm, BITMAPINFOHEADER *bmapInfoHeader);
+typedef double *histogram;
+
+double computeEntropy(bitMap bm, BITMAPINFOHEADER *bmapInfoHeader, histogram histo);
+histogram computeHist(bitMap bm, BITMAPINFOHEADER *bmapInfoHeader);
 	
 #endif
